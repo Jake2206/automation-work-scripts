@@ -30,7 +30,7 @@ for folder in dbx.files_list_folder('DropBox path goes here').entries:
 for sub_folder in folders:
     for monthly_folder in dbx.files_list_folder(sub_folder).entries:
         #Important!!! Update this for each month
-        if monthly_folder.name == '10 - October 2020 Ad Content':
+        if monthly_folder.name == 'subfolder name goes here':
             monthly_folders.append(monthly_folder.path_lower)
 
 for folder in monthly_folders:
