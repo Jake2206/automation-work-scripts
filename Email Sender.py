@@ -1,4 +1,7 @@
-'''This is a program that takes in a spreadsheet and sends emails to clients'''
+'''
+Author: Jake Alexander
+Purpose: This is a program that takes in a spreadsheet and sends emails to clients
+'''
 
 import pandas as pd
 import smtplib

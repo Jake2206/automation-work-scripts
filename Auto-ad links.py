@@ -1,5 +1,9 @@
-'''This program accesses information from a spreadsheet to send emails 
-formatted with links. It uses Email Sender.py to send the emails.'''
+'''
+Author: Jake Alexander
+Purpose: This program accesses information from a spreadsheet to send emails 
+formatted with links. It uses Email Sender.py to send the emails.
+Date: 9/3/20
+'''
 
 import pandas as pd
 import datetime
