@@ -1,4 +1,5 @@
-'''This is a program that takes uses a spreadsheet to send emails'''
+'''This is a program that takes in a spreadsheet and sends emails to clients'''
+
 import pandas as pd
 import smtplib
 from email import encoders
