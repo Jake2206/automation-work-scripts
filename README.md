@@ -1,5 +1,5 @@
 # automation-work-scripts
 
-These programs are to automate tasks for my job. Most of them import and use 
-the Email Sender program. The tasks are things such as sending emails with links,
-checking dropbox folders for file, and creating individualized service report pdf files.
+These programs automate tasks for my job. The tasks are things such as sending and formatting emails with data,
+checking dropbox folders for submissions (using DropBox API), and creating individualized service report pdf files. The programs use spreadsheets (as
+pandas dataframes) to get data. Data includes contact info, links, Facebook ad result metrics, dates, etc. 
