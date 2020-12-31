@@ -13,7 +13,7 @@ ad_rep_col = email_list['Ad Rep']
 my_stores = []
 
 for idx in range(len(ad_rep_col)):
-    if ad_rep_col[idx] == 'JA' and email_list['STORE NAME'][idx] != '':
+    if (ad_rep_col[idx] == 'JA' or ad_rep_col[idx] == 'LB') and email_list['STORE NAME'][idx] != '':
         my_stores.append((email_list['STORE NAME'][idx]).lower())
 
 all_dropbox_links = email_list['Main']

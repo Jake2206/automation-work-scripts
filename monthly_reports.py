@@ -18,12 +18,14 @@ import calendar
 
 #Get the month
 current_time = datetime.datetime.now()
-current_month = calendar.month_name[current_time.month] + ' 2020 Ad Results'
+current_month = calendar.month_name[current_time.month-1] + ' 2020 Ad Results'
 
 #IMPORTANT!! Update these with the correct files
-old_monthly_excel = 'previous month excel file path goes here'
-monthly_excel = 'current month excel file goes here'
-ad_stats_excel = 'ad results excel file goes here'
+
+#Also make sure to delete stores that quit and add new stores from the old file!
+old_monthly_excel = 'file path goes here'
+monthly_excel = 'file path goes here'
+ad_stats_excel = 'file path goes here'
 
 old_monthly = pd.read_excel(old_monthly_excel, keep_default_na=False)
 monthly = pd.read_excel(monthly_excel, keep_default_na=False)
@@ -65,8 +67,8 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     impressions = f'{impressions:,}'
     
     #load fonts
-    pdfmetrics.registerFont(TTFont('Good Vibes', 'path to ttf font file goes here'))
-    pdfmetrics.registerFont(TTFont('CMU Serif', 'path to ttf font file goes here'))
+    pdfmetrics.registerFont(TTFont('Good Vibes', 'font file path goes here'))
+    pdfmetrics.registerFont(TTFont('CMU Serif', 'font file path goes here'))
     
     c = canvas.Canvas("report.pdf")
     c.setPageSize((768, 1024))
@@ -79,7 +81,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     style.textColor = '#67999E'
     
     # Drawing the image
-    c.drawInlineImage(r'path to image file for background of report goes here', 0, 0, preserveAspectRatio=True)
+    c.drawInlineImage(r'name the file and the path location here', 0, 0, preserveAspectRatio=True)
     
     #Create the Store name text
     items = []
@@ -100,7 +102,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the ad link
     items = []
-    ad_link_link = ('<link href={}>Message goes here</link>').format(ad_link)
+    ad_link_link = ('<link href={}>Click here to view your BB ad</link>').format(ad_link)
     items.append(Paragraph(ad_link_link, style))
     
     # Create a Frame for the ad link
@@ -158,7 +160,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the facebook link
     facebook = []
-    facebook_link = '<link href="https://www.example.com/">Message goes here</link>'
+    facebook_link = '<link href="https://www.facebook.com/BridalBoutiques.us/">Link to our FaceBook page</link>'
     facebook.append(Paragraph(facebook_link, style))
     
     # Create a Frame for the Facebook link
@@ -167,7 +169,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the Instagram link
     instagram = []
-    instagram_link = '<link href="https://www.example.com">Message goes here</link>'
+    instagram_link = '<link href="https://www.instagram.com/bridalboutiques.us/">Link to our Instagram page</link>'
     instagram.append(Paragraph(instagram_link, style))
     
     # Create a Frame for the Instagram link
@@ -176,7 +178,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the Blog link
     blog = []
-    blog_link = '<link href="https://www.example.com">Message goes here</link>'
+    blog_link = '<link href="https://bridalboutiques.us/blog/">Link to BB.US Blog</link>'
     blog.append(Paragraph(blog_link, style))
     
     # Create a Frame for the Blog link
@@ -185,7 +187,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the BB page link
     page = []
-    page_link = ('<link href={}>Message goes here</link>').format(BB_page)
+    page_link = ('<link href={}>Link to your BB.US page</link>').format(BB_page)
     page.append(Paragraph(page_link, style))
     
     # Create a Frame for the BB page link
@@ -194,7 +196,7 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
     
     #Create the announcements link
     announcements = []
-    announcements_link = '<link href="https://www.example.com">Message goes here</link>'
+    announcements_link = '<link href="https://www.facebook.com/groups/1606839309617584/announcements/">Link to Important Announcements</link>'
     announcements.append(Paragraph(announcements_link, style))
     
     # Create a Frame for the announcements link
@@ -206,8 +208,8 @@ def make_report(store, owner, ad_link, reach, frequency, impressions, BB_page):
         
     
 def main():
-    subject = 'Write subject here'
-    body = 'Write body here'
+    subject = 'Monthly Bridal Boutiques Service report'
+    body = 'I hope you are doing well!\nAttached is your November ad report!\n\nPlease let me, Jacqui, or Linda know if you want to go over your results!\n'
     no_ads = []
     for i in range(len(monthly['STORE NAME'])):
         if monthly['Ad Rep'][i] != 'NA' and monthly['Report'][i] == '':
@@ -216,10 +218,11 @@ def main():
                 no_ads.append(monthly['STORE NAME'][i] + ' does not have an ad or the ad name is entered incorrectly in Facebook Ads Manager')
                 continue
             report = make_report(info[0], info[1], info[2], info[3], info[4], info[5], info[6])
+            #print(monthly['STORE NAME'][i])
             body_sent = (body, report)
             send_email(i, subject, body_sent)
             #IMPORTANT!! Update when you are ready to send the emails
-            #monthly['Report'][i] = 'Done'
+            monthly['Report'][i] = 'Done'
         else:
             no_ads.append(monthly['STORE NAME'][i])
             

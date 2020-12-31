@@ -27,25 +27,33 @@ dbx = dropbox.Dropbox(access_token)
 folders = []
 
 
-for folder in dbx.files_list_folder('DropBox folder path goes here').entries:
+for folder in dbx.files_list_folder('path goes here').entries:
     folders.append(folder.path_lower)
+    
+    #dbx.files_create_folder(new_folder, True)
+    #print(new_folder)
+    
+    
 
 for sub_folder in folders:
     for monthly_folder in dbx.files_list_folder(sub_folder).entries:
         #Important!!! Update this for each month
-        if monthly_folder.name == 'DropBox subfolder path goes here':
+        if monthly_folder.name == 'folder name goes here':
             for i in range(len(stores)):
                 if stores[i] != '' and stores[i].lower() in sub_folder and all_dropbox_links[i] == '':
-                    shared_link_metadata = dbx.sharing_create_shared_link_with_settings(monthly_folder.path_lower)
+                    try:
+                        shared_link_metadata = dbx.sharing_create_shared_link_with_settings(monthly_folder.path_lower)
+                    except:
+                        shared_link_metadata = dbx.sharing_get_shared_links(monthly_folder.path_lower).links[0]
                     all_dropbox_links[i] = shared_link_metadata.url
                     
-                    '''This will find and write in all of the links that already exist.
+                    #This will find and write in all of the links that already exist.
                     meta_data = dbx.sharing_list_shared_links(monthly_folder.path_lower).links
                     for entry in meta_data:
-                        if entry.name == '10 - October 2020 Ad Content':
+                        if entry.name == 'entry name goes here':
                             all_dropbox_links[i] = entry.url
                             print(all_dropbox_links[i])
-                            print(stores[i])'''
+                            print(stores[i])
 
 #Write the file - make sure this is the correct file path
 with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:

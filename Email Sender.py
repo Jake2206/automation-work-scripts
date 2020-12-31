@@ -13,7 +13,7 @@ from email.mime.text import MIMEText
 '''
 Change these to your credentials and name
 '''
-your_name = "Jake"
+your_name = "name"
 your_email = "email account"
 your_password = "enter password"
 excel_file = "file name and path"
@@ -95,30 +95,30 @@ def send_email(idx, subject, body):
     message.attach(MIMEText(full_email, "plain"))
     
     if attachment != None:
-       filename = attachment
-    # Open PDF file in binary mode
-    
-    # We assume that the file is in the directory where you run your Python script from
-    with open(filename, "rb") as attachment:
-        # The content type "application/octet-stream" means that a MIME attachment is a binary file
-        part = MIMEBase("application", "octet-stream")
-        part.set_payload(attachment.read())
-    
-        encoders.encode_base64(part)
+        filename = attachment
+        # Open PDF file in binary mode
         
-        part.add_header(
-                    "Content-Disposition",
-                    f"attachment; filename= {filename}",
-                    )
-    # Add attachment to your message and convert it to string
-    message.attach(part)
+        # We assume that the file is in the directory where you run your Python script from
+        with open(filename, "rb") as attachment:
+            # The content type "application/octet-stream" means that a MIME attachment is a binary file
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read())
+        
+            encoders.encode_base64(part)
+            
+            part.add_header(
+                        "Content-Disposition",
+                        f"attachment; filename= {filename}",
+                        )
+        # Add attachment to your message and convert it to string
+        message.attach(part)
         
     text = message.as_string()
-    
-    
+
+
     # This prints all your emails so you can see if they look ok.
-    print(full_email)
-    print("\n\n")
+    #print(full_email)
+    #print("\n\n")
 
     # This sends email:
     if sendNow == True:
@@ -132,4 +132,3 @@ def send_email(idx, subject, body):
     # Close the smtp server
     if sendNow == True:
         server.close()
-
